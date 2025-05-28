@@ -1,16 +1,14 @@
 from character import *
 from battle import *
+from utils import *
 
     # Testing classes/functions for now
-
-
-
 
 running = True
 
 while running:
     print("********************************************")
-    print("\n         Welome to Text RPG!")
+    slow_text("\n          Welome to Text RPG!\n")
 
     playername = input("What's your name?: ")
 
