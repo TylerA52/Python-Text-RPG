@@ -1,6 +1,9 @@
 from character import *
 from utils import *
+import os, sys
 import random
+
+# Add mana system to prevent infinite spells
 
 class Battle:
     def __init__(self, player, enemy):
@@ -8,7 +11,7 @@ class Battle:
         self.enemy = enemy
         self.playerTurn = True
         self.playerdefCount = 0
-        self.enemydefcount = 0
+        self.enemydefCount = 0
 
     def player_turn(self):
         while self.playerTurn:
@@ -38,6 +41,7 @@ class Battle:
 
     def enemy_turn(self):
         while not self.playerTurn:
+            print("\n***********************************************")
             slow_text(f"\nIt is {self.enemy.name}'s turn!\n")
             
             enemyAction = random.choice(["attack", "spell", "defend"])
@@ -45,8 +49,7 @@ class Battle:
             if enemyAction == "attack":
                 self.enemy.attack_action(self.player)
             elif enemyAction == "spell":
-                 # add random spell choice for enemy as well
-                self.enemy.cast_spell(self.player)
+                 self.enemy.enemy_cast(self.player)
             elif enemyAction == "defend":
                 if self.enemydefCount < 3:
                     self.enemy.defend()
@@ -54,12 +57,16 @@ class Battle:
                 else:
                     slow_text("defense can't go any higher")
 
-            self.enemy.attack_action(self.player)
+            input("\nPress Enter to continue...")
+            os.system('clear')
             self.playerTurn = True
 
 
     def run_battle(self):
         while self.player.health > 0 and self.enemy.health > 0:
+            self.player.display_player()
+            print("*********************************")
+            self.enemy.display_enemy()
             self.player_turn()
             if self.enemy.health <= 0:
                 slow_text(f"{self.enemy.name} has been defeated!")
@@ -69,6 +76,7 @@ class Battle:
             if self.player.health <= 0:
                 slow_text(f"{self.player.name} has been defeated!")
                 break
+
 
 
 
