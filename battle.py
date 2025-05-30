@@ -32,6 +32,7 @@ class Battle:
                 else:
                     slow_text("defense can't go any higher!")
             elif playerChoice == "stats":
+                os.system('clear')
                 print("\nTyler:\n")
                 self.player.stats_screen()
                 print(f"\n{self.enemy.name}:")

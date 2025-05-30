@@ -1,11 +1,20 @@
 from character import *
 from battle import *
 from utils import *
+from explore import *
 
     # Testing classes/functions for now
 battleState = False
 exploreState = False
 titleState = True
+
+world_map = [
+    ["Forest", "River", "Mountain"],
+    ["Village", "Crossroads", "Cave"],
+    ["Plains", "Ruins", "Castle"]
+]
+
+exploration = Explore(world_map)
 
 while titleState:
     os.system('clear')
@@ -24,7 +33,21 @@ while titleState:
     os.system('clear')
 
     titleState = False
-    battleState = True
+    exploreState = True
+
+while exploreState:
+    coords, location = exploration.get_current_location()
+
+    exploration.show_map()
+    print("Available directions:", exploration.get_directions())
+    movement = input("Move where? (n/s/e/w) ").lower()
+    exploration.move(movement)
+    
+    if location == "Crossroads":
+        os.system('clear')
+        print("You have encountered a Goblin!")
+        exploreState = False
+        battleState = True
 
 while battleState:
 
